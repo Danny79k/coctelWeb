@@ -1,0 +1,35 @@
+.cajaingredientes{
+  display: flex;
+  flex-direction: row;
+  overflow-wrap: break-word;
+  background-color: red;
+}
+
+.listaIngredientes{
+  display: flex;
+  flex-direction: row;
+  overflow-wrap: break-word;
+  background-color: lime;
+}
+
+.ingrediente{
+  box-sizing: border-box;
+  text-overflow:ellipsis;
+  background-color: black;
+  height: 60px;
+  width: 60px;
+  border-radius: 20%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  margin: 5px;
+}
+
+.ingrediente:active{
+  background-color: rgb(31, 31, 31);
+  margin: 5px;
+  height: 55px;
+  width: 55px;
+}

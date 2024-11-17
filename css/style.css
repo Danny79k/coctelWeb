@@ -1,0 +1,74 @@
+.love {
+    font-family: "Love Light", serif !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
+}
+
+
+img#caipirina {
+    position: absolute;
+    top: 20px;
+    left: 1080px;
+    height: 250px;
+    width: 250px;
+    transform: rotate(20deg);
+    z-index: 0;
+}
+
+img#metropolitan {
+    position: absolute;
+    top: 25px;
+    left: 1400px;
+    height: 250px;
+    width: 250px;
+    transform: rotate(-20deg);
+    z-index: 0;
+}
+
+section.top {
+    background-image: url('../img/fondos/fondo1.jpg');
+    background-repeat: no-repeat;
+    z-index: 0;
+    height: 50dvw;
+}
+
+input.font-consola {
+    font-family: "Consolas", monospace !important;
+    text-align: center;
+    font-size: x-large;
+}
+
+input.font-consola:focus {
+    background-color: rgb(10, 20, 31);
+    animation-name: borders;
+    animation-duration: 0.1s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes borders {
+    from {
+        border-width: 5px;
+        border-color: transparent;
+    }
+
+    to {
+        border-width: 15px;
+        border-color: white;
+    }
+}
+
+section.bottom {
+    background-image: url('../img/fondos/lemones-fondo.jpeg');
+    background-repeat: no-repeat;
+    z-index: 0;
+    height: 100dvw;
+}
+
+.margin-card-cocktail {
+    position: relative;
+    top: 150px;
+}
+
+.preparacion {
+    width: 500px;
+}
