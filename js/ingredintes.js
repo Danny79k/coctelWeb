@@ -25,3 +25,16 @@ divIngredientes.forEach(divIngrediente =>
         })
     })
 )
+
+
+
+// let contendorIngredientes = document.querySelector("#cajaingredientes")
+
+// const ingredientes = ["azucar", "harina", "miel", "chocolate", "ron"]
+
+// for (let i = 0; i < ingredientes.length; i++) {
+//     let divIngrediente = document.createElement("div")
+//     divIngrediente.innerHTML = ingredientes[i]
+//     divIngrediente.classList.add("ingrediente")
+//     contendorIngredientes.appendChild(divIngrediente)
+// }

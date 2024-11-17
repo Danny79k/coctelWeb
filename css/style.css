@@ -1,3 +1,7 @@
+::-webkit-scrollbar {
+    width: 0px;
+  }
+
 .big {
     font-size: 120px;
 }
@@ -78,11 +82,11 @@ section.bottom {
 }
 
 .contenedorCoctel {
-    box-sizing: border-box !important; 
-    text-overflow:ellipsis !important;
+    box-sizing: border-box !important;
+    text-overflow: ellipsis !important;
     background-color: rgb(15, 15, 15) !important;
-    height: 120px !important;
-    width: 120px !important;
+    height: 300px !important;
+    width: 300px !important;
     border-radius: 20% !important;
     text-align: center !important;
     display: flex !important;
@@ -90,4 +94,54 @@ section.bottom {
     align-items: center !important;
     color: white !important;
     margin: 5px !important;
+}
+
+.contenedorCoctel:hover {
+    background-color: rgb(31, 31, 31) !important;
+    margin: 5px !important;
+    scale: 90%;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.cuadroExplicativo {
+    height: 600px;
+    width: 600px;
+    position: fixed !important;
+    top: 150px !important;
+    left: 700px !important;
+    border-radius: 10%;
+}
+
+.oscurecido {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.788);
+    display: none;
+}
+
+.active {
+    display: block;
+}
+
+.divQuote{
+    top: 150px;
+    position: relative;
+    text-align: center;
+    scale: 90%;
+}
+
+.quoteBlock{
+
+    color:white;
+    font-size: xx-large;
+}
+
+.cite{
+    color: rgb(71, 71, 71);
 }
