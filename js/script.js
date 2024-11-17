@@ -9,11 +9,13 @@
 //     divIngrediente.classList.add("ingrediente")
 //     contendorIngredientes.appendChild(divIngrediente)
 // }
-
+//#region declaracio de variables
 const nombreCoctelHTML = document.querySelector(".nombreCoctel")
 const listaIngredientes = document.querySelector(".lista-ingredientes")
 const preparacion = document.querySelector(".preparacion")
 const imgCoctel = document.querySelector(".imgCoctel")
+const buscador = document.querySelector("#buscador")
+const contedorResultados = document.querySelector(".contedor-resultados")
 
 async function nombreCoctel(termino) {
     try {
@@ -81,5 +83,27 @@ async function insertPrimerCocktail() {
         console.error("Error en insertPrimerCocktail:", error);
     }
 }
+
+//NO SE PUEDE USAR, DEMASIADAS PETICIONES A LA API PAPI PERO BUENA IDEA IGUALMENTE
+
+buscador.addEventListener('input', async (e) => {
+    let busqueda = String(e.target.value).charAt(0).toUpperCase() + String(e.target.value).slice(1);
+    console.log(busqueda);
+    let resultado = await nombreCoctel(busqueda);
+    contedorResultados.innerHTML = '';
+
+    if (resultado && resultado.drinks && resultado.drinks.length > 0) {
+        let filteredDrinks = resultado.drinks.filter(drink =>
+            drink["strDrink"] && drink["strDrink"].includes(busqueda)
+        );
+
+        filteredDrinks.forEach(drink => {
+            let contendorCoctel = document.createElement("div");
+            contendorCoctel.classList.add("contenedorCoctel");
+            contendorCoctel.innerHTML = drink["strDrink"];
+            contedorResultados.appendChild(contendorCoctel);
+        });
+    }
+});
 
 document.addEventListener('DOMContentLoaded', insertPrimerCocktail)

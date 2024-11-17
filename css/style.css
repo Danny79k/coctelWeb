@@ -1,3 +1,7 @@
+.big {
+    font-size: 120px;
+}
+
 .love {
     font-family: "Love Light", serif !important;
     font-weight: 400 !important;
@@ -7,20 +11,20 @@
 
 img#caipirina {
     position: absolute;
-    top: 20px;
+    top: 35px;
     left: 1080px;
-    height: 250px;
-    width: 250px;
+    height: 300px;
+    width: 300px;
     transform: rotate(20deg);
     z-index: 0;
 }
 
 img#metropolitan {
     position: absolute;
-    top: 25px;
+    top: 32px;
     left: 1400px;
-    height: 250px;
-    width: 250px;
+    height: 270;
+    width: 300px;
     transform: rotate(-20deg);
     z-index: 0;
 }
@@ -71,4 +75,19 @@ section.bottom {
 
 .preparacion {
     width: 500px;
+}
+
+.contenedorCoctel {
+    box-sizing: border-box !important; 
+    text-overflow:ellipsis !important;
+    background-color: rgb(15, 15, 15) !important;
+    height: 120px !important;
+    width: 120px !important;
+    border-radius: 20% !important;
+    text-align: center !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    color: white !important;
+    margin: 5px !important;
 }
