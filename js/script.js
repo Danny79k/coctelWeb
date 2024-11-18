@@ -114,7 +114,7 @@ buscador.addEventListener('input', async (e) => {
                 botonCancelar.classList.add("botonCancelar")
                 divCancelar.appendChild(botonCancelar)
                 cuadroExplicativo.appendChild(divCancelar)
-                cuadroExplicativo.classList.add("cuadroExplicativo", "d-flex", "flex-column", "text-center", "text-white", "z-index-1", "fixed-top", "bg-dark", "p-5")
+                cuadroExplicativo.classList.add("cuadroExplicativo", "cuadroExplicativo-responsive", "d-flex", "flex-column", "text-center", "text-white", "z-index-1", "fixed-top", "bg-dark", "p-5")
                 divOscurecedor.classList.add("active")
                 contedorResultados.appendChild(cuadroExplicativo)
                 console.log(cuadroExplicativo);
@@ -205,29 +205,56 @@ const frases = [
     {
         "frase": "“El gin tonic ha salvado más vidas y mentes de hombres ingleses que todos los doctores del Imperio”,  nos quedamos con otra que da debida cuenta de ese carácter arrollador que tenía: “Una señora se me acercó un día y me dijo: “Señor, está usted borrado; es más, asquerosamente borracho”… a lo que le respondí: “Sí, lo estoy señora, y déjeme decirle que usted es fea, es más, rematadamente fea. La diferencia es que mañana yo estaré sobrio, y usted seguirá siendo fea”.",
         "autor": "Winston Churchill"
+    },
+    {
+        "frase": "“No me fío de nadie que no beba, el mundo entero lleva tres copas de retraso”",
+        "autor": "Humphrey Bogart"
+    },
+    {
+        "frase": "“Un hombre inteligente a veces se ve obligado a estar borracho para pasar tiempo con tontos”",
+        "autor": "Ernest Hemingway"
+    },
+    {
+        "frase": "“Bebo para hacer interesantes a las otras personas”",
+        "autor": "Groucho Marx"
+    },
+    {
+        "frase": "“Ese es el problema de beber, pensaba, mientras me servía un trago. Si algo malo pasa, bebes para intentar olvidar; si algo bueno pasa, bebes para celebrar; y si nada pasa, bebes para que hacer que algo pase”",
+        "autor": "Charles Bukowski"
+    },
+    {
+        "frase": "“El alcohol puede ser el peor enemigo del hombre, pero la Biblia dice que ames a tu enemigo”",
+        "autor": "Frank Sinatra"
     }
 ]
 
 function usarFrasePlaceholder() {
+    let quoteDiv = document.querySelector(".divQuote")
     if (buscador.value === "") {
-        let fraseAleatoria = frases[Math.floor(Math.random() * frases.length)];
-        let texto = fraseAleatoria["frase"]
-        let autor = fraseAleatoria["autor"]
-        console.log(texto, autor);
-        let divQuote = document.createElement("div")
-        let quoteBlock = document.createElement("blockquote")
-        let cite = document.createElement("cite")
-        quoteBlock.innerHTML = texto
-        cite.innerHTML = autor
-        divQuote.classList.add("divQuote")
-        cite.classList.add("cite")
-        quoteBlock.classList.add("quoteBlock", "love")
-        divQuote.appendChild(quoteBlock)
-        divQuote.appendChild(cite)
-        sectionBottom.appendChild(divQuote)
-    } else {
-        let divQuote = document.querySelector(".divQuote")
-        divQuote.remove()
+
+        if (!quoteDiv) {
+            let fraseAleatoria = frases[Math.floor(Math.random() * frases.length)];
+            let texto = fraseAleatoria["frase"];
+            let autor = fraseAleatoria["autor"];
+            console.log(texto, autor);
+
+            let divQuote = document.createElement("div");
+            let quoteBlock = document.createElement("blockquote");
+            let cite = document.createElement("cite");
+
+            quoteBlock.innerHTML = texto;
+            cite.innerHTML = autor;
+            divQuote.classList.add("divQuote");
+            cite.classList.add("cite");
+            quoteBlock.classList.add("quoteBlock", "love");
+
+            divQuote.appendChild(quoteBlock);
+            divQuote.appendChild(cite);
+
+            sectionBottom.appendChild(divQuote);
+        }
+    } else if (quoteDiv) {
+        quoteDiv.remove();
     }
 }
 

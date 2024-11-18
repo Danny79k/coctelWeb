@@ -145,3 +145,15 @@ section.bottom {
 .cite{
     color: rgb(71, 71, 71);
 }
+
+@media only screen and (max-width: 1800px) {
+    .cuadroExplicativo-responsive {
+        height: 600px;
+        width: 600px;
+        position: fixed !important;
+        top: 50px !important;
+        left: 500px !important;
+        border-radius: 10%;
+    }
+}
+
