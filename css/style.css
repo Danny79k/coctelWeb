@@ -1,5 +1,5 @@
 ::-webkit-scrollbar {
-    width: 0px;
+    width: 1px;
   }
 
 .big {
@@ -46,7 +46,7 @@ input.font-consola {
     font-size: x-large;
 }
 
-input.font-consola:focus {
+input.font-consola:hover {
     background-color: rgb(10, 20, 31);
     animation-name: borders;
     animation-duration: 0.1s;
@@ -94,12 +94,14 @@ section.bottom {
     align-items: center !important;
     color: white !important;
     margin: 5px !important;
+    transition-duration: 0.3s !important;
+    transition-property: transform, background-color, margin;
 }
 
 .contenedorCoctel:hover {
     background-color: rgb(31, 31, 31) !important;
     margin: 5px !important;
-    scale: 90%;
+    transform: scale(0.9);
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
