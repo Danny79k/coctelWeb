@@ -7,6 +7,7 @@ const buscador = document.querySelector("#buscador")
 const contedorResultados = document.querySelector(".contedor-resultados")
 const divOscurecedor = document.querySelector(".oscurecido")
 const sectionBottom = document.querySelector(".bottom")
+let botonABCs = document.querySelectorAll(".abc")
 
 async function nombreCoctel(termino) {
     try {
@@ -22,13 +23,35 @@ async function nombreCoctel(termino) {
     }
 }
 
-function generarNumeroAleatorio() {
-    return Math.floor(Math.random() * 256);
+async function devuelveCoctelRandom(){
+    try {
+        let response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/random.php`)
+        if (!response.ok){
+            throw new Error(`error HTTP: ${response.status}`)
+        }
+        return await response.json()
+    } catch (e) {
+        console.log("no se ha podido recuperar un coctel random");
+        return null
+    }
+}
+
+async function devuelveCoctelPorLetra(letra){
+    try {
+        let response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${letra}`)
+        if (!response.ok){
+            throw new Error(`error HTTP: ${response.status}`)
+        }
+        return await response.json()
+    } catch (e) {
+        console.log("no se ha podido recuperar un coctel random");
+        return null
+    }
 }
 
 async function primerCocktail() {
     try {
-        let respuesta = await nombreCoctel(Math.floor(Math.random(0) * 10)); // Simplemente espera la respuesta
+        let respuesta = await devuelveCoctelRandom()
         if (respuesta && respuesta.drinks && respuesta.drinks.length > 0) {
             return respuesta.drinks;
         } else {
@@ -65,6 +88,7 @@ async function insertPrimerCocktail() {
                 elementoLista.textContent = `${ingredientes[i]}: ${medidas[i] !== undefined ? medidas[i] : "al gusto"}`
                 listaIngredientes.appendChild(elementoLista)
             }
+            preparacion.classList.add("text-center")
             preparacion.innerHTML = instrucciones
             let imagenDrink = drinkData[0]["strDrinkThumb"]
             console.log(imagenDrink);
@@ -79,9 +103,11 @@ async function insertPrimerCocktail() {
 
 //todo refactor this shit
 
-buscador.addEventListener('input', async (e) => {
+let lupa = document.querySelector(".lupa")
+
+lupa.addEventListener('click', async (e) => {
     usarFrasePlaceholder()
-    let busqueda = String(e.target.value).charAt(0).toUpperCase() + String(e.target.value).slice(1);
+    let busqueda = String(buscador.value).charAt(0).toUpperCase() + String(buscador.value).slice(1);
     console.log(busqueda);
     let resultado = await nombreCoctel(busqueda);
     contedorResultados.innerHTML = '';
@@ -92,7 +118,7 @@ buscador.addEventListener('input', async (e) => {
         );
 
         let Row = document.createElement("div")
-        Row.classList.add("row", "d-flex", "justify-content-evenly", "p-4")
+        Row.classList.add("row", "d-flex", "justify-content-evenly", "p-4", 'contendorCocteles')
         contedorResultados.appendChild(Row)
 
         filteredDrinks.forEach(drink => {
@@ -228,8 +254,11 @@ const frases = [
     }
 ]
 
+let divBuscador = document.querySelector("#divBuscador")
+
 function usarFrasePlaceholder() {
     let quoteDiv = document.querySelector(".divQuote")
+    let botonLimpiar = document.querySelector(".limpiar")
     if (buscador.value === "") {
 
         if (!quoteDiv) {
@@ -237,6 +266,8 @@ function usarFrasePlaceholder() {
             let texto = fraseAleatoria["frase"];
             let autor = fraseAleatoria["autor"];
             console.log(texto, autor);
+
+            lupa.classList.add('rounded-end')
 
             let divQuote = document.createElement("div");
             let quoteBlock = document.createElement("blockquote");
@@ -252,10 +283,40 @@ function usarFrasePlaceholder() {
             divQuote.appendChild(cite);
 
             sectionBottom.appendChild(divQuote);
+
+            botonLimpiar.remove()
+
         }
     } else if (quoteDiv) {
+        let botonLimpiar = document.createElement("button")
+        botonLimpiar.classList.add('bg-danger', 'text-white', 'px-3', 'rounded-end', 'limpiar')
+        let contendorCocteles = document.querySelector(".contendorCocteles")
+        botonLimpiar.addEventListener('click', () => {
+            contedorResultados.innerHTML = '';
+            buscador.value  = '';
+            usarFrasePlaceholder();
+        })
+        lupa.classList.remove('rounded-end')
+        botonLimpiar.innerHTML = "Limpiar"
+        divBuscador.appendChild(botonLimpiar)
         quoteDiv.remove();
     }
 }
+
+async function mostrarCoctelesLetra(letra){
+    let coctelPorLetra = await devuelveCoctelPorLetra(letra)
+    console.log(coctelPorLetra);
+}
+
+botonABCs.forEach(boton => {
+    boton.addEventListener('click', async (e) => {
+        e.preventDefault()
+        let letra = e.target.textContent
+        console.log(letra);
+        await mostrarCoctelesLetra(letra)
+        divOscurecedor.classList.add('active')
+    })
+})
+
 
 usarFrasePlaceholder()
