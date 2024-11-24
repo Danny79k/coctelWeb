@@ -23,10 +23,10 @@ async function nombreCoctel(termino) {
     }
 }
 
-async function devuelveCoctelRandom(){
+async function devuelveCoctelRandom() {
     try {
         let response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/random.php`)
-        if (!response.ok){
+        if (!response.ok) {
             throw new Error(`error HTTP: ${response.status}`)
         }
         return await response.json()
@@ -36,10 +36,10 @@ async function devuelveCoctelRandom(){
     }
 }
 
-async function devuelveCoctelPorLetra(letra){
+async function devuelveCoctelPorLetra(letra) {
     try {
         let response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${letra}`)
-        if (!response.ok){
+        if (!response.ok) {
             throw new Error(`error HTTP: ${response.status}`)
         }
         return await response.json()
@@ -142,6 +142,7 @@ lupa.addEventListener('click', async (e) => {
                 cuadroExplicativo.appendChild(divCancelar)
                 cuadroExplicativo.classList.add("cuadroExplicativo", "cuadroExplicativo-responsive", "d-flex", "flex-column", "text-center", "text-white", "z-index-1", "fixed-top", "bg-dark", "p-5")
                 divOscurecedor.classList.add("active")
+                document.querySelector("body").classList.add("overflow-y-hidden")
                 contedorResultados.appendChild(cuadroExplicativo)
                 console.log(cuadroExplicativo);
                 let infoSeleccionado = document.createElement("div")
@@ -199,6 +200,7 @@ lupa.addEventListener('click', async (e) => {
                 cuadroExplicativo.appendChild(infoSeleccionado)
                 let BTNCancelar = document.querySelector(".botonCancelar")
                 BTNCancelar.addEventListener("click", (e) => {
+                    document.querySelector("body").classList.remove("overflow-y-hidden")
                     divOscurecedor.classList.remove("active");
                     cuadroExplicativo.remove();
                 });
@@ -293,7 +295,7 @@ function usarFrasePlaceholder() {
         let contendorCocteles = document.querySelector(".contendorCocteles")
         botonLimpiar.addEventListener('click', () => {
             contedorResultados.innerHTML = '';
-            buscador.value  = '';
+            buscador.value = '';
             usarFrasePlaceholder();
         })
         lupa.classList.remove('rounded-end')
@@ -303,18 +305,127 @@ function usarFrasePlaceholder() {
     }
 }
 
-async function mostrarCoctelesLetra(letra){
-    let coctelPorLetra = await devuelveCoctelPorLetra(letra)
-    console.log(coctelPorLetra);
-}
-
 botonABCs.forEach(boton => {
     boton.addEventListener('click', async (e) => {
         e.preventDefault()
         let letra = e.target.textContent
         console.log(letra);
-        await mostrarCoctelesLetra(letra)
-        divOscurecedor.classList.add('active')
+        let cocteles = await devuelveCoctelPorLetra(letra)
+
+        let divCancelar = document.createElement("div")
+        divCancelar.classList.add("d-flex")
+        let botonCancelar = document.createElement("a")
+        botonCancelar.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="red" class="bi bi-x-lg" viewBox="0 0 16 16">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                    </svg>
+                    `
+        botonCancelar.classList.add("botonCancelarDiv")
+        divCancelar.appendChild(botonCancelar)
+        divOscurecedor.appendChild(divCancelar)
+
+        divOscurecedor.classList.add('active', 'overflow-y-auto')
+        document.querySelector("body").classList.add("overflow-y-hidden")
+
+        let Row = document.createElement("div")
+        Row.classList.add("row", "d-flex", "justify-content-evenly", "p-4", 'contendorCocteles')
+        divOscurecedor.appendChild(Row)
+        console.log(cocteles);
+
+        let BTNCancelarDiv = document.querySelector(".botonCancelarDiv")
+        cocteles.drinks.forEach(drink => {
+
+            let contendorCoctel = document.createElement("div");
+            contendorCoctel.classList.add("contenedorCoctel", "my-4", "contenedor");
+            contendorCoctel.innerHTML = drink["strDrink"];
+            Row.appendChild(contendorCoctel);
+
+            contendorCoctel.addEventListener("click", () => {
+                let cuadroExplicativo = document.createElement("div")
+                let divCancelar = document.createElement("div")
+                divCancelar.classList.add("d-flex")
+                let botonCancelar = document.createElement("a")
+                botonCancelar.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-lg" viewBox="0 0 16 16">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                    </svg>
+                    `
+                botonCancelar.classList.add("botonCancelar")
+                divCancelar.appendChild(botonCancelar)
+                cuadroExplicativo.appendChild(divCancelar)
+                cuadroExplicativo.classList.add("cuadroExplicativo", "cuadroExplicativo-responsive", "d-flex", "flex-column", "text-center", "text-white", "z-index-1", "fixed-top", "bg-dark", "p-5")
+                divOscurecedor.classList.add("active")
+                contedorResultados.appendChild(cuadroExplicativo)
+                console.log(cuadroExplicativo);
+                let infoSeleccionado = document.createElement("div")
+                infoSeleccionado.classList.add("infoSeleccionado", "overflow-x-auto")
+                // nombre coctel
+                let nombreTitulo = document.createElement("h1")
+                nombreTitulo.classList.add("display-3", "text-white")
+                nombreTitulo.textContent = drink["strDrink"]
+                infoSeleccionado.appendChild(nombreTitulo)
+                // imagen
+                let imagen = document.createElement("img")
+                let divImagen = document.createElement("div")
+                divImagen.classList.add("imagen", "d-flex", "justify-content-center")
+                imagen.src = drink["strDrinkThumb"]
+                imagen.classList.add("img-fluid", "w-50")
+                divImagen.appendChild(imagen)
+                infoSeleccionado.appendChild(divImagen)
+
+                // ingredientes & medidas
+                let tituloIngredientes = document.createElement("h1")
+                tituloIngredientes.classList.add("display-5", "text-white")
+                tituloIngredientes.textContent = "Ingredientes & Medidas"
+                infoSeleccionado.appendChild(tituloIngredientes)
+                let listaContendor = document.createElement("ul")
+
+                let ingredientes = []
+                let medidas = []
+
+                for (let i = 1; i <= 15; i++) {
+                    if (drink[`strIngredient${i}`] !== null) ingredientes.push(drink[`strIngredient${i}`])
+                    if (drink[`strMeasure${i}`] !== null) medidas.push(drink[`strMeasure${i}`])
+                }
+
+                for (let i = 0; i < ingredientes.length; i++) {
+                    let elementoLista = document.createElement("li")
+                    elementoLista.textContent = `${ingredientes[i]}: ${medidas[i] !== undefined ? medidas[i] : "al gusto"}`
+                    listaContendor.appendChild(elementoLista)
+                }
+
+                infoSeleccionado.appendChild(listaContendor)
+
+                //preparacion
+                if (drink["strInstructionsES"] !== null) {
+                    let tituloPreparacion = document.createElement("h1")
+                    tituloPreparacion.classList.add("display-5", "text-white")
+                    tituloPreparacion.textContent = "Preparación"
+                    infoSeleccionado.appendChild(tituloPreparacion)
+                    let textoPreparacion = document.createElement("p")
+                    textoPreparacion.classList.add("text-white")
+                    textoPreparacion.textContent = drink["strInstructionsES"]
+                    infoSeleccionado.appendChild(textoPreparacion)
+                }
+
+
+                cuadroExplicativo.appendChild(infoSeleccionado)
+                let BTNCancelar = document.querySelector(".botonCancelar")
+                BTNCancelar.addEventListener("click", (e) => {
+                    cuadroExplicativo.remove();
+                });
+            })
+
+        })
+        let cuadroExplicativo = document.querySelector(".cuadroExplicativo")
+        BTNCancelarDiv.addEventListener("click", (e) => {
+            // cuadroExplicativo.remove();
+            document.querySelector("body").classList.remove("overflow-y-hidden")
+            Row.innerHTML = ''
+            Row.remove()
+            divOscurecedor.classList.remove('active');
+            BTNCancelarDiv.remove()
+        });
     })
 })
 
